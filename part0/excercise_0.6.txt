@@ -1,0 +1,17 @@
+note over browser:
+browser executes javascript 
+handler on form submit
+end note
+
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+server-->browser: HTTP 201 OK
+
+
+
+
+note over browser:
+browser starts executing js-code
+that redraws notes
+end note
+
