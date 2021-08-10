@@ -1,4 +1,7 @@
-const initialState = ''
+const initialState = {
+  notification: '',
+  timeout: null
+}
 
 const reducer = (state = initialState, action) => {
   console.log('state now: ', state)
@@ -6,8 +9,13 @@ const reducer = (state = initialState, action) => {
 
   switch (action.type) {
     case 'SET_NOTIFICATION': {
-      const notification = action.data
-      return notification
+      if (state.timeout) {
+        clearTimeout(state.timeout)
+      }
+      return {
+        notification: action.data.notification, 
+        timeout: action.data.timeout
+      }
     }
     case 'RESET_NOTIFICATION' : {
       return initialState
@@ -22,9 +30,11 @@ export const setNotification = (notification, seconds) => {
   return async (dispatch) => {
     dispatch({
       type: 'SET_NOTIFICATION',
-      data: notification
+      data: {
+        notification,
+        timeout: setTimeout(() => {dispatch(resetNotification())}, seconds * 1000)
+      }
     })
-    setTimeout(() => {dispatch(resetNotification())}, seconds * 1000)
   }
 }
 
